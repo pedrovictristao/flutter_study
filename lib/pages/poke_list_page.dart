@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_study/model/pokemon_model.dart';
 import 'package:flutter_study/services/poke_repository.dart';
 import 'package:flutter_study/services/poke_service.dart';
+import 'package:flutter_study/services/poke_service_mock.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class PokeListPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _PokeListPageState extends State<PokeListPage> {
         pokemons.addAll(newPokemons);
       });
     } catch (e) {
-      debugPrint('Erro ao carregar mais Pokémon: $e');
+      debugPrint('Erro ao carregar mais Pokémons: $e');
     }
 
     setState(() => isLoading = false);
@@ -35,8 +36,9 @@ class _PokeListPageState extends State<PokeListPage> {
   @override
   void initState() {
     super.initState();
+    pokemons.take(20).toList();
     final PokemonService service = PokemonService();
-    repository = PokemonRepository(service);
+    repository = PokemonRepository(PokeServiceMock());
     _fetchMorePokemons();
   }
 
@@ -48,6 +50,8 @@ class _PokeListPageState extends State<PokeListPage> {
       ),
       body: InfiniteList(
         itemCount: pokemons.length,
+        separatorBuilder: (context, index) => const Divider(),
+        onFetchData: _fetchMorePokemons,
         itemBuilder: (context, index) {
           final pokemon = pokemons[index];
 
@@ -61,8 +65,6 @@ class _PokeListPageState extends State<PokeListPage> {
             ),
           );
         },
-        separatorBuilder: (context, index) => const Divider(),
-        onFetchData: _fetchMorePokemons,
       ),
     );
   }

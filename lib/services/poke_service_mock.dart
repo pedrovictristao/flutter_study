@@ -169,6 +169,5 @@ class PokeServiceMock implements ServiceImpl {
   }
 
   @override
-  // TODO: implement pageSize
   int get pageSize => 20;
 }
