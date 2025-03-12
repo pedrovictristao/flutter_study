@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_study/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Teste de usabilidade da página "Consumo de API (Poke API)"',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
